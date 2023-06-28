@@ -1,0 +1,7 @@
+repos
+.DS_Store
+*.egg-info
+build
+dist
+venv
+__pycache__
