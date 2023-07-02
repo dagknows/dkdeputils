@@ -65,10 +65,12 @@ class Manifest:
                 diff = local(f"cd {repopath} && git diff {last_version_tag}")
                 create_tag = diff.failed or diff.stdout.strip() != ""
 
-            if create_tag:
+            if create_tag or last_version_tag.strip() in ("", "main", "master"):
                 pkg.versiontag = f"{name}_{str(time.time()).replace('.', '_')}"
                 # pkg.versiontag += f"{random.randint(0, 1000000000)}"
                 tagged_packages.append(pkg)
+            else:
+                pkg.versiontag = last_version_tag
 
         if not tagged_packages:
             print("No packages have changed.  Commit wont proceed.  Make some code changes and try again")
