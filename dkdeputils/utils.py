@@ -42,7 +42,7 @@ def checkout_repo(group, name, repo_url, versiontag, repodir, default_main="main
         runner(f"cd {repopath} && git checkout {versiontag}")
         try:
             runner(f"cd {repopath} && git pull --rebase")
-        except exc:
+        except Exception as exc:
             print("Rebase failed: ", traceback.format_exc())
     else:
         print(f"Cloning {repo_url}:{versiontag} -> {repopath}")
