@@ -38,6 +38,7 @@ def checkout_repo(group, name, repo_url, versiontag, repodir, default_main="main
         pass
     if direxists:
         print(f"Checking out {repo_url}:{versiontag} -> {repopath}")
+        runner(f"cd {repopath} && git fetch")
         runner(f"cd {repopath} && git checkout {versiontag}")
         try:
             runner(f"cd {repopath} && git pull --rebase")
