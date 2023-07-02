@@ -1,5 +1,5 @@
 
-import os
+import os, traceback
 from invoke import run as local
 from fabric import task, Connection, SerialGroup, ThreadingGroup
 
@@ -38,7 +38,11 @@ def checkout_repo(group, name, repo_url, versiontag, repodir, default_main="main
         pass
     if direxists:
         print(f"Checking out {repo_url}:{versiontag} -> {repopath}")
-        runner(f"cd {repopath} && git checkout {versiontag} && git pull --rebase")
+        runner(f"cd {repopath} && git checkout {versiontag}")
+        try:
+            runner(f"cd {repopath} && git pull --rebase")
+        except exc:
+            print("Rebase failed: ", traceback.format_exc())
     else:
         print(f"Cloning {repo_url}:{versiontag} -> {repopath}")
         runner(f"git clone {repo_url} {repopath}")
