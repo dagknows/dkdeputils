@@ -47,6 +47,7 @@ class Manifest:
         if not os.path.isdir(repodir): os.makedirs(repodir)
         latest = self.ensure_uncommitted()
 
+        assert self.deployment.name, "name cannot be empty in the manifest file"
         # checkout all repos and ensure they are at the right versions
         self.checkout(latest.versiontag, repodir)
 
@@ -66,7 +67,7 @@ class Manifest:
                 create_tag = diff.failed or diff.stdout.strip() != ""
 
             if create_tag or last_version_tag.strip() in ("", "main", "master"):
-                pkg.versiontag = f"{name}_{str(time.time()).replace('.', '_')}"
+                pkg.versiontag = f"{self.deployment.name}_{name}_{str(time.time()).replace('.', '_')}"
                 # pkg.versiontag += f"{random.randint(0, 1000000000)}"
                 tagged_packages.append(pkg)
             else:
