@@ -40,7 +40,7 @@ class AWSClient:
         pairs = self.run("ec2", "describe-addresses").get("Addresses", [])
         pairs = [p for p in pairs if aws_has_tag(p, "Name", ipname)]
         if pairs: return pairs[0], False
-        pair = self.run("ec2", "allocate-addresses", **{
+        pair = self.run("ec2", "allocate-address", **{
             "--tag-specification": aws_tag_spec("address", **{ "Name": ipname }),
         })
         return pair, True
