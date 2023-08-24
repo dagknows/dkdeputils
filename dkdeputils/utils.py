@@ -15,7 +15,6 @@ def setup_ssh_in_group(ctx, group, keys_folder):
     group.get(".ssh/config", "/tmp/config")
     config = open("/tmp/config").read().split("\n")
 
-    import ipdb ; ipdb.set_trace()
     for l in config:
         if l == "Host github.com": return
 
