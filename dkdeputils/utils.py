@@ -6,6 +6,7 @@ from fabric import task, Connection, SerialGroup, ThreadingGroup
 @task
 def setup_ssh_in_group(ctx, group, keys_folder):
     """ Ensures we have ssh access to github for downloading repos in the hosts. """
+    print("Setting SSH and .github access keys...")
     group.put(f"{keys_folder}/github_rsa", ".ssh/")
     group.put(f"{keys_folder}/github_rsa.pub", ".ssh/")
     group.run("chmod og-rw .ssh/github_rsa*")
@@ -14,6 +15,7 @@ def setup_ssh_in_group(ctx, group, keys_folder):
     group.get(".ssh/config", "/tmp/config")
     config = open("/tmp/config").read().split("\n")
 
+    import ipdb ; ipdb.set_trace()
     for l in config:
         if l == "Host github.com": return
 
