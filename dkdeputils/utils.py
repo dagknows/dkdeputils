@@ -64,3 +64,4 @@ def setup_docker(ctx, user, group=None):
     try: group.run("sudo groupadd docker")
     except: pass
     group.run(f"sudo usermod -aG docker {user}")
+    print("Docker Setup complete")
